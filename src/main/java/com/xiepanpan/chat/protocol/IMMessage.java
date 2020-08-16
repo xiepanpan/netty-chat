@@ -38,6 +38,28 @@ public class IMMessage {
      */
     private String content;
 
+    public IMMessage(){};
+
+    public IMMessage(String cmd, long time, int online, String content) {
+        this.cmd = cmd;
+        this.time = time;
+        this.online = online;
+        this.content = content;
+    }
+
+    public IMMessage(String cmd, long time, String sender) {
+        this.cmd = cmd;
+        this.time = time;
+        this.sender = sender;
+    }
+
+    public IMMessage(String cmd, long time, String sender, String content) {
+        this.cmd = cmd;
+        this.time = time;
+        this.sender = sender;
+        this.content = content;
+    }
+
     public String getAddr() {
         return addr;
     }
