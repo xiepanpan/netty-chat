@@ -12,7 +12,7 @@ Date.prototype.format = function(format){
 	if(/(y+)/.test(format)) { 
 		format = format.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
 	} 
-	
+
 	for(var k in o) { 
 		if(new RegExp("("+ k +")").test(format)) { 
 			format = format.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length)); 
@@ -37,7 +37,7 @@ $(document).ready(function () {
 			 var _reg = /^\S{1,10}$/;
 			 var nickname =$("#nickname").val();
 			 if (nickname!="") {
-			 	if (!_reg.test($.trim(nickname))) {
+			 	if (!(_reg.test($.trim(nickname)))) {
 			 		$("#error-msg").html("昵称长度必须在10个字以内");
 			 		return false;
 				}
@@ -45,13 +45,17 @@ $(document).ready(function () {
 			 	$("#loginbox").hide();
 			 	$("#chatbox").show();
 			 	this.init(nickname);
+			 }else {
+			 	$("#error-msg").html("先输入昵称才能进入聊天室");
+			 	return false;
 			 }
+			 return false;
 		 },
 		 init:function (nickname) {
 			 var message = $("#send-message");
 			 message.focus();
 			 message.keydown(function (e) {
-				 if (e.ctrlKey&&e.which==13||e.which==10) {
+				 if ((e.ctrlKey&&e.which==13)||e.which==10) {
 				 	CHAT.sendText();
 				 }
 			 });
@@ -71,6 +75,7 @@ $(document).ready(function () {
 				 $("#onlinemsg").append(section);
 			 };
 
+			 //将消息添加到聊天面板
 			 var appendToPanel = function (message) {
 				 var regx = /^\[(.*)\](\s\-\s(.*))?/g;
 				 var group ='',label ="",content ="",cmd="",time=0,name="";
@@ -85,7 +90,7 @@ $(document).ready(function () {
 
 				 if (cmd == "SYSTEM") {
 				 	var total = labelArr[2];
-				 	$("#onlinecount").html(""+total);
+				 	$("#onlinecount").html("" + total);
 				 	addSystemTip(content);
 				 } else if (cmd == "CHAT") {
 					 //聊天命令
@@ -201,7 +206,7 @@ $(document).ready(function () {
 			if (!window.WebSocket) {
 				return;
 			}
-			if (CHAT.socket.readyState== WebSocket.OPEN) {
+			if (CHAT.socket.readyState == WebSocket.OPEN) {
 				var message =("[FLOWER]["+new Date().getTime()+"]["+CHAT.nickname+"]");
 				CHAT.socket.send(message);
 				$("#send-message").focus();
@@ -211,4 +216,4 @@ $(document).ready(function () {
 		 }
 
 	 }
-})
+});

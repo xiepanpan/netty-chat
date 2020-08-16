@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import org.msgpack.MessagePack;
+import org.msgpack.MessageTypeException;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,10 +33,10 @@ public class IMDecoder extends ByteToMessageDecoder {
                 }
             }
 
-            in.getBytes(in.readableBytes(),array,0,length);
+            in.getBytes(in.readerIndex(),array,0,length);
             out.add(new MessagePack().read(array,IMMessage.class));
             in.clear();
-        } catch (IOException e) {
+        } catch (MessageTypeException e) {
             ctx.channel().pipeline().remove(this);
         }
     }

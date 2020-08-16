@@ -45,9 +45,9 @@ public class ChatServer {
                             ChannelPipeline pipeline = ch.pipeline();
 
                             //解析自定义协议
-//                            pipeline.addLast(new IMDecoder());
+                            pipeline.addLast(new IMDecoder());
                             pipeline.addLast(new IMEncoder());
-//                            pipeline.addLast(new SocketHandler());
+                            pipeline.addLast(new SocketHandler());
 
                             //解析http请求
                             pipeline.addLast(new HttpServerCodec());

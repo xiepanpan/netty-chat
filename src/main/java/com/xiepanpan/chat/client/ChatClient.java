@@ -25,7 +25,7 @@ public class ChatClient {
     }
 
     public static void main(String[] args) {
-        new ChatClient("xp").connect("127.0.0.1",81);
+        new ChatClient("xp").connect("127.0.0.1",80);
     }
 
     private void connect(String host, int port) {
